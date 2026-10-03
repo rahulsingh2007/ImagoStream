@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Gradients for lens and loom/weaving threads -->
+    <linearGradient id="lensGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+    <linearGradient id="lensGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EC4899" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+    <linearGradient id="threadGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#EC4899" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#4F46E5" stop-opacity="0.8" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Centralized Logo Group -->
+  <g transform="translate(250, 250)">
+    
+    <!-- Background subtle interconnected geometric/loom grid rings -->
+    <circle cx="0" cy="0" r="180" fill="none" stroke="url(#threadGrad)" stroke-width="2" stroke-dasharray="8 6" opacity="0.4" />
+    <circle cx="0" cy="0" r="140" fill="none" stroke="url(#lensGrad1)" stroke-width="1.5" opacity="0.3" />
+
+    <!-- Interwoven Loom Threads forming a geometric aperture / weave pattern -->
+    <g filter="url(#glow)">
+      <!-- Horizontal / Diagonal Weave Arcs -->
+      <path d="M -160 0 C -160 -90 -90 -160 0 -160 C 90 -160 160 -90 160 0 C 160 90 90 160 0 160 C -90 160 -160 90 -160 0 Z" 
+            fill="none" stroke="url(#threadGrad)" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+      
+      <!-- Overlapping Loom Strands (Interlaced effect) -->
+      <path d="M -130 -130 L 130 130" stroke="url(#lensGrad1)" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+      <path d="M -130 130 L 130 -130" stroke="url(#lensGrad2)" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+    </g>
+
+    <!-- Stylized Camera / Optical Lenses Intersecting -->
+    <!-- Primary Lens Frame (Left/Top) -->
+    <circle cx="-35" cy="-35" r="95" fill="none" stroke="url(#lensGrad1)" stroke-width="12" />
+    
+    <!-- Secondary Lens Frame (Right/Bottom) -->
+    <circle cx="35" cy="35" r="95" fill="none" stroke="url(#lensGrad2)" stroke-width="12" />
+
+    <!-- Optical Refraction / Center Intersecting Loom Prism -->
+    <g>
+      <!-- Intersection glow/highlight shape -->
+      <path d="M -35 -130 C 30 -130 130 -30 130 35 C 130 100 30 130 -35 130 C -100 130 -130 30 -130 -35 C -130 -100 -100 -130 -35 -130 Z" 
+            fill="url(#lensGrad1)" opacity="0.1" />
+      
+      <!-- Center lens glass glare / aperture flare -->
+      <ellipse cx="0" cy="0" rx="45" ry="25" transform="rotate(-45)" fill="#FFFFFF" opacity="0.6" />
+      <circle cx="5" cy="-5" r="12" fill="#FFFFFF" opacity="0.8" />
+    </g>
+
+  </g>
+</svg>
