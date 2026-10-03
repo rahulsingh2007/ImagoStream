@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center pt-4 sm:pt-5 pb-0 px-4 sm:px-8 md:px-10 bg-white dark:bg-[#0B0F19] text-black dark:text-slate-100 border-b border-gray-100 dark:border-slate-800 transition-colors duration-100">
             <div onClick={handleLogoClick} className="flex items-center cursor-pointer gap-2 pb-4 sm:pb-5">
                 <img src={Logo} alt="LensLoom Logo" className="w-7 h-7 sm:w-8 sm:h-8" />
-                <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">LensLoom</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">ImagoStream</h2>
             </div>
 
             <div className="flex gap-1.5 sm:gap-2 items-center">
