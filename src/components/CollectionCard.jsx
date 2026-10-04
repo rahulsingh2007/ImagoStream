@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { removeCollection, removeToast } from "../redux/features/collectionSlice"
+import { removeCollection, removeToast, downloadToast } from "../redux/features/collectionSlice"
 import { Download, Loader2, Trash } from "lucide-react"
 import { trackUnsplashDownload } from "../API/mediaApi"
 import { useState } from "react"
@@ -13,6 +13,10 @@ const CollectionCard = ({ item }) => {
         e.stopPropagation();
         dispatch(removeCollection(item))
         dispatch(removeToast())
+    }
+    const downloadFromCollection = (e) => {
+        e.stopPropagation();
+        dispatch(downloadToast())
     }
 
     const downloadMedia = async (e) => {
@@ -84,14 +88,17 @@ const CollectionCard = ({ item }) => {
                     />
                 )}
             </div>
-            
+
             <div className="absolute bottom-0 right-0 w-full p-1 flex justify-start items-center z-10 capitalize">
                 <p className="text-xs text-black bg-white rounded px-1">{item.type}</p>
             </div>
 
             <div className="absolute top-0 left-0 w-full p-3 flex justify-end items-center z-10">
                 <button
-                    onClick={downloadMedia}
+                    onClick={(e) => {
+                        downloadMedia(e);
+                        downloadFromCollection(e);
+                    }}
                     disabled={isDownloading}
                     className="bg-white/90 dark:bg-slate-800/90 text-black dark:text-slate-100 hover:bg-white dark:hover:bg-slate-700 rounded-full p-2 cursor-pointer transition-transform active:scale-90 shadow-md shadow-black/20 flex items-center justify-center border border-transparent dark:border-white/10 disabled:opacity-50"
                     title={isDownloading ? "Downloading..." : "Download file"}

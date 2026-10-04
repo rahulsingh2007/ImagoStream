@@ -53,9 +53,22 @@ const collectionSlice = createSlice({
                 theme: "light",
                 transition: Zoom,
             });
+        },
+        downloadToast: () => {
+            toast.error('Downloaded', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Zoom,
+            });
         }
     }
 })
 
-export const { addCollection, removeCollection, clearCollection, addedToast, removeToast } = collectionSlice.actions;
+export const { addCollection, removeCollection, clearCollection, addedToast, removeToast, downloadToast } = collectionSlice.actions;
 export default collectionSlice.reducer;

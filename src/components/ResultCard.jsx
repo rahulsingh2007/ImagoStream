@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { addCollection, addedToast } from "../redux/features/collectionSlice"
+import { addCollection, addedToast, downloadToast } from "../redux/features/collectionSlice"
 import { Bookmark, Download, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { trackUnsplashDownload } from "../API/mediaApi"
@@ -13,6 +13,10 @@ const ResultCard = ({ item }) => {
         e.stopPropagation();
         dispatch(addCollection(item))
         dispatch(addedToast())
+    }
+    const downloadFromCollection = (e) => {
+        e.stopPropagation();
+        dispatch(downloadToast())
     }
 
     const downloadMedia = async (e) => {
@@ -29,7 +33,7 @@ const ResultCard = ({ item }) => {
             const localBlobUrl = window.URL.createObjectURL(blob);
             const hiddenLink = document.createElement("a");
             hiddenLink.href = localBlobUrl;
-            
+
             const fileExtension = item.type === "video" ? "mp4" : item.type === "gif" ? "gif" : "jpg";
             hiddenLink.download = `${item.provider || "media"}-${item.id || "download"}.${fileExtension}`;
             document.body.appendChild(hiddenLink);
@@ -45,7 +49,7 @@ const ResultCard = ({ item }) => {
     }
 
     return (
-        <div 
+        <div
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className="relative w-full h-56 sm:h-60 rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform will-change-transform duration-200 shadow-sm shadow-black/20"
@@ -54,12 +58,12 @@ const ResultCard = ({ item }) => {
                 {item.type === 'photo' && (
                     <img src={item.src} alt={item.title} className="w-full h-full object-cover object-center" />
                 )}
-                
+
                 {item.type === 'video' && (
                     !isHovered ? (
-                        <img 
-                            src={item.thumbnail} 
-                            alt={item.title} 
+                        <img
+                            src={item.thumbnail}
+                            alt={item.title}
                             className="w-full h-full object-cover object-center"
                         />
                     ) : (
@@ -76,23 +80,26 @@ const ResultCard = ({ item }) => {
                         />
                     )
                 )}
-                
+
                 {item.type === 'gif' && (
-                    <img 
-                        src={isHovered ? item.src : item.thumbnail} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover object-center" 
+                    <img
+                        src={isHovered ? item.src : item.thumbnail}
+                        alt={item.title}
+                        className="w-full h-full object-cover object-center"
                     />
                 )}
             </div>
-            
+
             <div className="absolute bottom-0 right-0 w-full p-1 flex justify-start items-center z-10 capitalize">
                 <p className="text-xs text-black bg-white rounded px-1">{item.type}</p>
             </div>
 
             <div className="absolute top-0 left-0 w-full p-3 flex justify-end items-center z-10">
                 <button
-                    onClick={downloadMedia}
+                    onClick={(e) => {
+                        downloadMedia(e);
+                        downloadFromCollection(e);
+                    }}
                     disabled={isDownloading}
                     className="bg-white/90 dark:bg-slate-800/90 text-black dark:text-slate-100 hover:bg-white dark:hover:bg-slate-700 rounded-full p-2 cursor-pointer transition-transform active:scale-90 shadow-md shadow-black/20 flex items-center justify-center border border-transparent dark:border-white/10 disabled:opacity-50"
                     title={isDownloading ? "Downloading..." : "Download file"}
@@ -104,7 +111,7 @@ const ResultCard = ({ item }) => {
                     )}
                 </button>
             </div>
-            
+
             <div id="bottom" className="absolute bottom-0 left-0 w-full p-3 flex justify-end items-center bg-linear-to-t from-black/40 via-black/10 to-transparent z-10">
                 <button
                     onClick={(e) => addToCollection(e, item)}
