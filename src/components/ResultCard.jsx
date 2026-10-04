@@ -7,41 +7,37 @@ import { trackUnsplashDownload } from "../API/mediaApi"
 const ResultCard = ({ item }) => {
     const dispatch = useDispatch()
     const [isDownloading, setIsDownloading] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
 
     const addToCollection = (e, item) => {
         e.stopPropagation();
         dispatch(addCollection(item))
         dispatch(addedToast())
     }
+
     const downloadMedia = async (e) => {
-        e.stopPropagation(); // Stops any card click behaviors
+        e.stopPropagation();
         if (isDownloading) return;
         setIsDownloading(true);
         try {
-            // 1. Unsplash requirement: hit their download tracking URL
             if (item.provider === "unsplash" && item.downloadLocation) {
                 await trackUnsplashDownload(item.downloadLocation);
             }
-            // Target the highest quality asset URL available
             const executionUrl = item.downloadUrl || item.src;
-            // 2. Stream the asset data as binary Blob to bypass raw browser tabs
             const response = await fetch(executionUrl);
             const blob = await response.blob();
-            // 3. Form a clean local document target link
             const localBlobUrl = window.URL.createObjectURL(blob);
             const hiddenLink = document.createElement("a");
             hiddenLink.href = localBlobUrl;
-            // Generate file extension cleanly
+            
             const fileExtension = item.type === "video" ? "mp4" : item.type === "gif" ? "gif" : "jpg";
             hiddenLink.download = `${item.provider || "media"}-${item.id || "download"}.${fileExtension}`;
             document.body.appendChild(hiddenLink);
             hiddenLink.click();
-            // Cleanup references
             document.body.removeChild(hiddenLink);
             window.URL.revokeObjectURL(localBlobUrl);
         } catch (error) {
             console.error("Local file extraction failed:", error);
-            // Fallback safe measure: Open source file directly if network streams fail
             window.open(item.downloadUrl || item.src, "_blank");
         } finally {
             setIsDownloading(false);
@@ -49,28 +45,52 @@ const ResultCard = ({ item }) => {
     }
 
     return (
-        <div className="relative w-full h-56 sm:h-60 rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 shadow-sm shadow-black/20">
-            <div className="h-full w-full">
+        <div 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="relative w-full h-56 sm:h-60 rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform will-change-transform duration-200 shadow-sm shadow-black/20"
+        >
+            <div className="h-full w-full bg-slate-100 dark:bg-slate-900 isolation-auto">
                 {item.type === 'photo' && (
                     <img src={item.src} alt={item.title} className="w-full h-full object-cover object-center" />
                 )}
+                
                 {item.type === 'video' && (
-                    <video
-                        loop
-                        muted
-                        playsInline
-                        autoPlay
-                        preload="none"
-                        poster={item.thumbnail}
-                        className="w-full h-full object-cover object-center"
-                        src={item.src}
+                    !isHovered ? (
+                        <img 
+                            src={item.thumbnail} 
+                            alt={item.title} 
+                            className="w-full h-full object-cover object-center"
+                        />
+                    ) : (
+                        <video
+                            key={item.src}
+                            loop
+                            muted
+                            playsInline
+                            autoPlay
+                            preload="auto"
+                            poster={item.thumbnail}
+                            className="w-full h-full object-cover object-center transform-[translateZ(0)]"
+                            src={item.src}
+                        />
+                    )
+                )}
+                
+                {item.type === 'gif' && (
+                    <img 
+                        src={isHovered ? item.src : item.thumbnail} 
+                        alt={item.title} 
+                        className="w-full h-full object-cover object-center" 
                     />
                 )}
-                {item.type === 'gif' && (
-                    <img src={item.src} alt={item.title} className="w-full h-full object-cover object-center" />
-                )}
             </div>
-            <div className="absolute top-0 left-0 w-full p-3 flex justify-end items-center">
+            
+            <div className="absolute bottom-0 right-0 w-full p-1 flex justify-start items-center z-10 capitalize">
+                <p className="text-xs text-black bg-white rounded px-1">{item.type}</p>
+            </div>
+
+            <div className="absolute top-0 left-0 w-full p-3 flex justify-end items-center z-10">
                 <button
                     onClick={downloadMedia}
                     disabled={isDownloading}
@@ -84,7 +104,8 @@ const ResultCard = ({ item }) => {
                     )}
                 </button>
             </div>
-            <div id="bottom" className="absolute bottom-0 left-0 w-full p-3 flex justify-end items-center bg-linear-to-t from-black/40 via-black/10 to-transparent">
+            
+            <div id="bottom" className="absolute bottom-0 left-0 w-full p-3 flex justify-end items-center bg-linear-to-t from-black/40 via-black/10 to-transparent z-10">
                 <button
                     onClick={(e) => addToCollection(e, item)}
                     className="bg-white/90 dark:bg-slate-800/90 text-black dark:text-slate-100 hover:bg-white dark:hover:bg-slate-700 rounded-full p-2 cursor-pointer transition-transform active:scale-90 shadow-md shadow-black/20 flex items-center justify-center border border-transparent dark:border-white/10"
