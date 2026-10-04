@@ -20,7 +20,7 @@
 
 ## 📖 About
 
-**LensLoom** is a modern, full-featured media discovery platform that lets users search for high-quality **Photos**, **Videos**, and **GIFs** from across the web using a unified interface. Powered by the **Unsplash**, **Pixabay**, and **GIPHY** APIs, LensLoom delivers instant results with a beautifully crafted UI featuring smooth dark/light mode transitions, skeleton loading states, and a personal collection system — all backed by Redux Toolkit for seamless state management.
+**LensLoom** is a modern, full-featured media discovery platform that lets users search for high-quality **Photos**, **Videos**, and **GIFs** from across the web using a unified interface. Powered by the **Unsplash**, **Pixabay**, and **GIPHY** APIs, LensLoom delivers instant results with a beautifully crafted UI featuring smooth dark/light mode transitions, skeleton loading states, a personal collection system, and **one-click media downloads** — all backed by Redux Toolkit for seamless state management. Recent updates bring significant performance optimisations for a noticeably smoother browsing experience.
 
 ---
 
@@ -58,6 +58,7 @@
 - 🔍 **Unified Media Search** — Search Photos, Videos, and GIFs from a single search bar with tabbed navigation
 - 🌗 **Dark / Light Mode** — Smooth theme toggle with system-preference awareness and persistent state
 - 💾 **Personal Collection** — Save and manage your favourite media items with Redux-powered persistence
+- ⬇️ **Media Download** — Download any Photo, Video, or GIF directly to your device with a single click
 - 📄 **Pagination** — Navigate through large result sets with a clean, accessible paginator
 - ⚡ **Skeleton Loaders** — Shimmer loading skeletons for a polished, professional feel
 - 🎯 **Empty & Error States** — Thoughtfully designed states for no results, errors, and empty collections
@@ -65,6 +66,18 @@
 - 🔔 **Toast Notifications** — Non-intrusive feedback for collection actions via React Toastify
 - 🗑️ **Clear Collection** — One-click bulk removal of all saved collection items
 - 🚫 **404 Page** — Custom not-found page for unrecognised routes
+
+---
+
+## ⚡ Performance Improvements
+
+The latest update brings several optimisations for a smoother, faster experience:
+
+- **Optimised re-renders** — Components are wrapped with `React.memo` and selectors are refined to prevent unnecessary renders on state changes
+- **Lazy image loading** — Media images use native `loading="lazy"` and are decoded asynchronously to avoid jank during scroll
+- **Debounced interactions** — User input and rapid UI interactions are debounced to reduce redundant API calls and state updates
+- **Efficient Redux selectors** — Memoised selectors ensure derived state is only recomputed when its inputs change
+- **Smoother animations** — Transitions and hover effects are GPU-accelerated using `transform` and `opacity` properties for fluid 60fps rendering
 
 ---
 
