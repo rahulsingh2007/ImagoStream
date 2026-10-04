@@ -11,14 +11,14 @@ export async function fetchPhotos(query, page = 1) {
         params: { query, page, per_page: PER_PAGE },
         headers: { Authorization: `Client-ID ${UNSPLASH_KEY}` }
     })
-    return res.data  // { results, total, total_pages }
+    return res.data 
 }
 
 export async function fetchVideos(query, page = 1) {
     const res = await axios.get('https://pixabay.com/api/videos/', {
         params: { key: PIXABAY_KEY, q: query, per_page: PER_PAGE, page }
     });
-    return res.data;  // { hits, total, totalHits }
+    return res.data;
 }
 
 export async function fetchGIF(query, page = 1) {
@@ -26,5 +26,16 @@ export async function fetchGIF(query, page = 1) {
     const res = await axios.get('https://api.giphy.com/v1/gifs/search', {
         params: { api_key: GIPHY_KEY, q: query, limit: PER_PAGE, offset }
     });
-    return res.data;  // { data, pagination: { total_count, count, offset } }
+    return res.data; 
 }
+
+export async function trackUnsplashDownload(downloadLocationUrl) {
+    try {
+        await axios.get(downloadLocationUrl, {
+            headers: { Authorization: `Client-ID ${UNSPLASH_KEY}` }
+        });
+    } catch (err) {
+        console.error("Failed to track Unsplash download metric:", err);
+    }
+}
+

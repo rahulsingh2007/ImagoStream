@@ -28,9 +28,12 @@ const ResultGrid = () => {
                 data = (response?.results || []).slice(0, PER_PAGE).map((item) => ({
                     id: item.id,
                     type: "photo",
+                    provider: "unsplash",
                     title: item.alt_description || "Untitled Photo",
                     thumbnail: item.urls?.small,
                     src: item.urls?.small,
+                    downloadUrl: item.urls?.full, // High-res version for downloading
+                    downloadLocation: item.links?.download_location // Required Unsplash trigger url
                 }));
                 more = page < (response?.total_pages || 1);
 
@@ -39,11 +42,13 @@ const ResultGrid = () => {
                 data = (response?.hits || []).slice(0, PER_PAGE).map((item) => ({
                     id: item.id,
                     type: "video",
+                    provider: "pixabay",
                     title: item.name
                         ? item.name.split(",")[0].trim()
                         : "Untitled Video",
                     thumbnail: item.videos?.small?.thumbnail,
                     src: item.videos?.medium?.url,
+                    downloadUrl: item.videos?.large?.url || item.videos?.medium?.url,
                 }));
                 const totalPages = Math.ceil((response?.totalHits || 0) / PER_PAGE);
                 more = page < totalPages;
@@ -53,9 +58,11 @@ const ResultGrid = () => {
                 data = (response?.data || []).slice(0, PER_PAGE).map((item) => ({
                     id: item.id,
                     type: "gif",
+                    provider: "giphy",
                     title: item.title || "Untitled GIF",
                     thumbnail: item.images?.fixed_width_small?.url,
                     src: item.images?.fixed_width?.url,
+                    downloadUrl: item.images?.original?.url,
                 }));
                 const pagination = response?.pagination;
                 const totalLoaded = (pagination?.offset || 0) + (pagination?.count || 0);
