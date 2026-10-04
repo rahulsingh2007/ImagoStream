@@ -1,6 +1,6 @@
 <h1 align="center">
-  <img src="./src/assets/favicon.svg" width="40" height="40" alt="LensLoom Logo" />
-  LensLoom
+  <img src="./src/assets/favicon.svg" width="40" height="40" alt="ImagoStream Logo" />
+  ImagoStream
 </h1>
 
 <p align="center">
@@ -20,7 +20,7 @@
 
 ## 📖 About
 
-**LensLoom** is a modern, full-featured media discovery platform that lets users search for high-quality **Photos**, **Videos**, and **GIFs** from across the web using a unified interface. Powered by the **Unsplash**, **Pixabay**, and **GIPHY** APIs, LensLoom delivers instant results with a beautifully crafted UI featuring smooth dark/light mode transitions, skeleton loading states, a personal collection system, and **one-click media downloads** — all backed by Redux Toolkit for seamless state management. Recent updates bring significant performance optimisations for a noticeably smoother browsing experience.
+**ImagoStream** is a modern, full-featured media discovery platform that lets users search for high-quality **Photos**, **Videos**, and **GIFs** from across the web using a unified interface. Powered by the **Unsplash**, **Pixabay**, and **GIPHY** APIs, ImagoStream delivers instant results with a beautifully crafted UI featuring smooth dark/light mode transitions, skeleton loading states, a personal collection system, and **one-click media downloads** — all backed by Redux Toolkit for seamless state management. Recent updates bring significant performance optimisations for a noticeably smoother browsing experience.
 
 ---
 
@@ -83,7 +83,7 @@ The latest update brings several optimisations for a smoother, faster experience
 
 ## 🎨 Design System & Aesthetics
 
-LensLoom is built with a cohesive design language centred around an **Indigo / Slate** colour palette with deep dark-mode support.
+ImagoStream is built with a cohesive design language centred around an **Indigo / Slate** colour palette with deep dark-mode support.
 
 | Token | Light | Dark |
 |---|---|---|
@@ -107,7 +107,7 @@ LensLoom is built with a cohesive design language centred around an **Indigo / S
 ## 📁 Project Structure
 
 ```
-LensLoom-App/
+ImagoStream-App/
 ├── public/
 │   ├── favicon.svg            # App favicon
 │   └── icons.svg              # SVG icon sprite
@@ -186,8 +186,8 @@ LensLoom-App/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/rahulsingh2007/LensLoom.git
-cd LensLoom-App
+git clone https://github.com/rahulsingh2007/ImagoStream.git
+cd ImagoStream-App
 ```
 
 ### 2. Install dependencies
