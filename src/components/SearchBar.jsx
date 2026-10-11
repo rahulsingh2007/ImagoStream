@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { setQuery } from '../redux/features/searchSlice'
 import { Search, X } from "lucide-react";
@@ -7,10 +7,6 @@ const SearchBar = () => {
     const { query } = useSelector((store) => store.search);
     const [text, setText] = useState(query || '');
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        setText(query || '');
-    }, [query]);
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -54,7 +50,7 @@ const SearchBar = () => {
                 )}
                 <button
                     type="submit"
-                    className="bg-[#4f46e5] hover:bg-indigo-700 text-white px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-lg outline-none cursor-pointer active:scale-95 transition-all flex items-center justify-center whitespace-nowrap shrink-0"
+                    className="bg-[#4f46e5] hover:bg-indigo-700 text-white px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-lg outline-none cursor-pointer active:scale-95 transition-all    whitespace-nowrap shrink-0"
                 >
                     Search
                 </button>
